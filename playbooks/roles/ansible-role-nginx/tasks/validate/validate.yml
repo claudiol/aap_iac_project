@@ -29,7 +29,7 @@
   register: collection_list
   changed_when: false
   delegate_to: localhost
-  become: false
+  become: true
 
 - name: DEBUG
   ansible.builtin.debug:
