@@ -1,4 +1,5 @@
-- hosts: all
+- name: Install ansible-role-nginx
+  hosts: all
 
   roles:
     - ansible-role-nginx
