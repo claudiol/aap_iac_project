@@ -28,7 +28,7 @@
   ansible.builtin.shell: /usr/bin/hostnamectl | grep Static;whoami;ansible-galaxy collection list
   register: collection_list
   changed_when: false
-  delegate_to: localhost
+    #delegate_to: localhost
   become: true
 
 - name: DEBUG
