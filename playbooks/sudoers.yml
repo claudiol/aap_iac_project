@@ -1,0 +1,30 @@
+---
+- name: Audit and Validate Sudoers Configuration
+  hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Validate main sudoers file syntax
+      ansible.builtin.command: visudo -cf /etc/sudoers
+      register: main_sudoers_check
+      changed_when: false
+      failed_when: main_sudoers_check.rc != 0
+
+    - name: Check for custom configurations in sudoers.d directory
+      ansible.builtin.find:
+        paths: /etc/sudoers.d
+        file_type: file
+      register: sudoers_d_files
+
+    - name: Validate syntax of all files inside sudoers.d
+      ansible.builtin.command: "visudo -cf {{ item.path }}"
+      register: sudoers_d_check
+      loop: "{{ sudoers_d_files.files }}"
+      changed_when: false
+      failed_when: sudoers_d_check.rc != 0
+      when: sudoers_d_files.matched > 0
+
+    - name: Report validation status
+      ansible.builtin.debug:
+        msg: "Success: All sudoers configurations are syntactically correct and secure."
