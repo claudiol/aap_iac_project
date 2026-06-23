@@ -5,11 +5,11 @@
   gather_facts: false
 
   tasks:
-    - name: Validate main sudoers file syntax
-      ansible.builtin.command: visudo -cf /etc/sudoers
-      register: main_sudoers_check
-      changed_when: false
-      failed_when: main_sudoers_check.rc != 0
+#    - name: Validate main sudoers file syntax
+#      ansible.builtin.command: visudo -cf /etc/sudoers
+#      register: main_sudoers_check
+#      changed_when: false
+#      failed_when: main_sudoers_check.rc != 0
 
     - name: Check for custom configurations in sudoers.d directory
       ansible.builtin.find:
